@@ -10,6 +10,7 @@ option go_package = "github.com/erooohaaa/orders-generated/api;api";
 
 service PaymentService {
   rpc ProcessPayment(PaymentRequest) returns (PaymentResponse);
+  rpc ListPayments(ListPaymentsRequest) returns (ListPaymentsResponse);
 }
 
 
@@ -26,7 +27,14 @@ message PaymentResponse {
   string transaction_id = 1;
   string status = 2;
 }
+message ListPaymentsRequest {
+  int64 min_amount = 1;
+  int64 max_amount = 2;
+}
 
+message ListPaymentsResponse {
+  repeated PaymentResponse payments = 1;
+}
 message OrderRequest {
   string order_id = 1;
 }
