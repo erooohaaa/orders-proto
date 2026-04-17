@@ -26,6 +26,7 @@ message PaymentRequest {
 message PaymentResponse {
   string transaction_id = 1;
   string status = 2;
+  string amount = 3;
 }
 message ListPaymentsRequest {
   int64 min_amount = 1;
