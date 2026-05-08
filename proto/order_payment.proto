@@ -4,19 +4,7 @@ package api;
 
 import "google/protobuf/timestamp.proto";
 
-
 option go_package = "github.com/erooohaaa/orders-generated/api;api";
-
-
-service PaymentService {
-  rpc ProcessPayment(PaymentRequest) returns (PaymentResponse);
-  rpc ListPayments(ListPaymentsRequest) returns (ListPaymentsResponse);
-}
-
-
-service OrderService {
-  rpc SubscribeToOrderUpdates(OrderRequest) returns (stream OrderStatusUpdate);
-}
 
 message PaymentRequest {
   string order_id = 1;
@@ -26,8 +14,9 @@ message PaymentRequest {
 message PaymentResponse {
   string transaction_id = 1;
   string status = 2;
-  string amount = 3;
+  int64 amount = 3;
 }
+
 message ListPaymentsRequest {
   int64 min_amount = 1;
   int64 max_amount = 2;
@@ -36,6 +25,7 @@ message ListPaymentsRequest {
 message ListPaymentsResponse {
   repeated PaymentResponse payments = 1;
 }
+
 message OrderRequest {
   string order_id = 1;
 }
@@ -44,4 +34,13 @@ message OrderStatusUpdate {
   string order_id = 1;
   string status = 2;
   google.protobuf.Timestamp updated_at = 3;
+}
+
+service PaymentService {
+  rpc ProcessPayment(PaymentRequest) returns (PaymentResponse);
+  rpc ListPayments(ListPaymentsRequest) returns (ListPaymentsResponse);
+}
+
+service OrderService {
+  rpc SubscribeToOrderUpdates(OrderRequest) returns (stream OrderStatusUpdate);
 }
